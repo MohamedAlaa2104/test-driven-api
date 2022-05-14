@@ -13,4 +13,14 @@ class TodoListController extends Controller
 
         return response($todoList);
     }
+
+    public function show(TodoList $todoList)
+    {
+        return response($todoList);
+    }
+
+    public function store(Request $request)
+    {
+        return TodoList::create($request->all());
+    }
 }
