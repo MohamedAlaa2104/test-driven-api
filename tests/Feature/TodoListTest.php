@@ -79,6 +79,15 @@ class TodoListTest extends TestCase
         $this->assertDatabaseHas('todo_lists', ['name' => 'updated name']);
     }
 
+    public function test_validate_name_while_updating_todo_list()
+    {
+        $this->withExceptionHandling();
+
+        $this->putJson( route('todo-list.update', $this->list) )
+            ->assertUnprocessable()
+            ->assertJsonValidationErrorFor('name');
+    }
+
     public function test_delete_todo_list()
     {
         $this->deleteJson( route('todo-list.destroy', $this->list) )
@@ -86,4 +95,6 @@ class TodoListTest extends TestCase
 
         $this->assertDatabaseMissing('todo_lists', ['id' => $this->list->id,'name' => $this->list->name]);
     }
+
+
 }
